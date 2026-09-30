@@ -1,5 +1,7 @@
-const addButton = document.getElementById("add")
-addButton.addEventListener("click", displayText("+")) 
+let num1
+let num2
+let op
+let counter = 1 // checking whether it is first or second num for displayNumber function
 
 function add(num1, num2) {
     return num1 + num2
@@ -19,25 +21,95 @@ function divide(num1, num2) {
 
 function operate(num1, num2, operator) {
     if (operator == "+") {
-        console.log(add(num1, num2))
+        display.innerText = ""
+        result = add(num1, num2)
+        num1 = null
+        num2 = null
+        counter = 1
+        displayNumber(result)
 
     } else if (operator == "-") {
-        console.log(subtract(num1, num2))
+        display.innerText = ""
+        result = subtract(num1, num2)
+        num1 = null
+        num2 = null
+        counter = 1
+        displayNumber(result)
 
     } else if (operator == "*") {
-        console.log(multiply(num1, num2))
+        display.innerText = ""
+        result = multiply(num1, num2)
+        num1 = null
+        num2 = null
+        counter = 1
+        displayNumber(result)
 
     } else if (operator == "/") {
-        console.log(divide(num1, num2))
+        display.innerText = ""
+        result = divide(num1, num2)
+        num1 = null
+        num2 = null
+        counter = 1
+        displayNumber(result)
     }
 }
 
+// displaying text on calculator
 const display = document.getElementById("display")
+ 
+// digits
+const seven = document.getElementById("butt seven")
+const eight = document.getElementById("butt eight")
+const nine = document.getElementById("butt nine")
+const four = document.getElementById("butt four")
+const five = document.getElementById("butt five")
+const six = document.getElementById("butt six")
+const three = document.getElementById("butt three")
+const two = document.getElementById("butt two")
+const one = document.getElementById("butt one")
+const zero = document.getElementById("butt zero")
 
-function displayText(character) {
-    console.log(character)
+seven.addEventListener("click", () => displayNumber(7))
+eight.addEventListener("click", () => displayNumber(8))
+nine.addEventListener("click", () => displayNumber(9))
+four.addEventListener("click", () => displayNumber(4))
+five.addEventListener("click", () => displayNumber(5))
+six.addEventListener("click", () => displayNumber(6))
+three.addEventListener("click", () => displayNumber(3))
+two.addEventListener("click", () => displayNumber(2))
+one.addEventListener("click", () => displayNumber(1))
+zero.addEventListener("click", () => displayNumber(0))
+
+const addition = document.getElementById("add")
+const subtraction = document.getElementById("subtract")
+const multiplication = document.getElementById("multiply")
+const division = document.getElementById("divide")
+const equality = document.getElementById("equal")
+
+addition.addEventListener("click", () => displayNumber("+"))
+subtraction.addEventListener("click", () => displayNumber("-"))
+multiplication.addEventListener("click", () => displayNumber("*"))
+division.addEventListener("click", () => displayNumber("/"))
+equality.addEventListener("click", () => displayNumber("="))
+
+
+function displayNumber(num) {   
+    if (num != "=") {
+        if (Number.isInteger(num)) { // if integer
+            if (counter == 1) {
+                num1 = num
+                counter++
+                display.append(num)
+            } else if (counter == 2) {
+                num2 = num
+                display.append(num)
+            }
+        } else {    // if not integer
+            op = num
+            display.append(num)
+        }
+    } else {
+        operate(num1, num2, op)
+        return
+    }
 }
-
-
-
-
