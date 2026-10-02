@@ -1,7 +1,8 @@
-let num1
-let num2
+let num1 = ""
+let num2 = ""
 let op
 let counter = 1 // checking whether it is first or second num for displayNumber function
+
 
 function add(num1, num2) {
     return num1 + num2
@@ -23,32 +24,34 @@ function operate(num1, num2, operator) {
     if (operator == "+") {
         display.innerText = ""
         result = add(num1, num2)
-        num1 = null
-        num2 = null
+
+        display.append(result)
+        num1 = result
+        num2 = ""
+        op = null
         counter = 1
-        displayNumber(result)
 
     } else if (operator == "-") {
         display.innerText = ""
         result = subtract(num1, num2)
-        num1 = null
-        num2 = null
+        num1 = ""
+        num2 = ""
         counter = 1
         displayNumber(result)
 
     } else if (operator == "*") {
         display.innerText = ""
         result = multiply(num1, num2)
-        num1 = null
-        num2 = null
+        num1 = ""
+        num2 = ""
         counter = 1
         displayNumber(result)
 
     } else if (operator == "/") {
         display.innerText = ""
         result = divide(num1, num2)
-        num1 = null
-        num2 = null
+        num1 = ""
+        num2 = ""
         counter = 1
         displayNumber(result)
     }
@@ -68,6 +71,7 @@ const three = document.getElementById("butt three")
 const two = document.getElementById("butt two")
 const one = document.getElementById("butt one")
 const zero = document.getElementById("butt zero")
+
 
 seven.addEventListener("click", () => displayNumber(7))
 eight.addEventListener("click", () => displayNumber(8))
@@ -93,23 +97,22 @@ division.addEventListener("click", () => displayNumber("/"))
 equality.addEventListener("click", () => displayNumber("="))
 
 
-function displayNumber(num) {   
-    if (num != "=") {
-        if (Number.isInteger(num)) { // if integer
-            if (counter == 1) {
-                num1 = num
-                counter++
-                display.append(num)
-            } else if (counter == 2) {
-                num2 = num
-                display.append(num)
-            }
-        } else {    // if not integer
-            op = num
+function displayNumber(num) {
+    if (Number.isInteger(num)) {
+        if (counter == 1) {
+            num1 += num // concatenates numbers instead of adding
+            display.append(num)
+        } else if (counter == 2) {
+            num2 += num
             display.append(num)
         }
-    } else {
-        operate(num1, num2, op)
-        return
+    } else { // if they press an operator
+        if (num == "=") {
+            operate(Number(num1), Number(num2), op)
+        } else {
+            op = num
+            display.append(num)
+            counter++
+        }
     }
 }
